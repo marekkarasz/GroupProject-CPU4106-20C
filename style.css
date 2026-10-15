@@ -79,6 +79,7 @@
     --clr-background-100: hsl(160, 16%, 96%);
     --clr-background-200: hsl(165, 42%, 78%);
     --clr-background-300: hsl(165, 49%, 49%);
+    --clr-background-400: hsl(165, 68%, 27%);
     --clr-heading: #183f42ff;
     --clr-heading-secondary: #126a64;
     --clr-accent: #126a64;
@@ -138,7 +139,6 @@
 
     padding-inline: 2rem;
     padding-block: 3rem;
-    border-right: 1px solid var(--clr-accent);
   }
   .sidebar-heading h3 {
     color: var(--clr-heading-secondary);
@@ -164,5 +164,58 @@
   .sidebar-navigation li:active {
     background-color: var(--clr-background-200);
     font-weight: 700;
+  }
+}
+@layer home {
+  .grid {
+    padding-inline: 4rem;
+    padding-block: 4rem;
+    background-color: var(--clr-background-100);
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .wrapper {
+    background-color: white;
+    border-radius: 25px;
+    margin-block: 3rem;
+    padding-block: 2rem;
+    padding-inline: 2.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: start;
+    gap: 1rem;
+  }
+  .wrapper,
+  .guide {
+    font-size: var(--fs-body-large);
+  }
+  .btn-main {
+    border: none;
+    font-weight: 700;
+    font-size: var(--fs-body-small);
+    color: white;
+    background-color: var(--clr-background-400);
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  .btn-side {
+    border: none;
+    font-weight: 700;
+    font-size: var(--fs-body-small);
+    color: var(--clr-accent);
+    /* background-color: var(--clr-background-400); */
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  .interactions {
+    display: flex;
+    gap: 1.5rem;
   }
 }
