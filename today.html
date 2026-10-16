@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>MediReminder</title>
+  </head>
+  <body>
+    <header>
+      <div class="sidebar">
+        <div class="sidebar-heading">
+          <h3>MediReminder</h3>
+          <p>Your daily routine</p>
+        </div>
+
+        <nav class="sidebar-navigation">
+          <ul role="list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="">Reminders</a></li>
+            <li><a href="">History</a></li>
+            <li><a href="">Settings</a></li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <p>Coursework prototype</p>
+          <p>Fictional records only</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="home">
+      <section>
+        <div class="main-heading">
+          <h1>Today</h1>
+          <p>The recorded occurrence is now marked taken.</p>
+        </div>
+        <div class="labels">
+          <div class="item"><span>0</span> due</div>
+          <div class="item"><span>1</span> taken</div>
+        </div>
+      </section>
+      <section class="grid_cards">
+        <div class="card">
+          <div class="time" id="time">9:00</div>
+          <div class="info">
+            <h3>Demo reminder A</h3>
+            <p>Daily reminder, Fictional example</p>
+          </div>
+          <div class="due">
+            <div class="item" id="due_reminder">Due</div>
+            <div class="item" id="mark_button">Mark as taken</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="time">18:00</div>
+          <div class="info">
+            <h3>Demo reminder B</h3>
+            <p>Daily reminder, Fictional example</p>
+          </div>
+          <div class="due">
+            <div class="item" id="due_reminder">Upcoming</div>
+            <!-- <div class="item" id="mark_button">Mark as taken</div> -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
