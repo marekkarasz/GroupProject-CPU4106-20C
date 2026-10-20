@@ -3,24 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
-    <title>MediReminder</title>
+    <title>Home | MediReminder</title>
   </head>
   <body>
     <header>
       <div class="sidebar">
         <div class="sidebar-heading">
-          <h3>MediReminder</h3>
+          <p class="sidebar-title">MediReminder</p>
           <p>Your daily routine</p>
         </div>
 
-        <nav class="sidebar-navigation">
+        <nav class="sidebar-navigation" aria-label="Main">
           <ul role="list">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html" aria-current="page">Home</a></li>
             <li><a href="today.html">Today</a></li>
-            <li><a href="">Reminders</a></li>
-            <li><a href="">History</a></li>
-            <li><a href="">Settings</a></li>
+            <li><a href="#">Reminders</a></li>
+            <li><a href="#">History</a></li>
+            <li><a href="#">Settings</a></li>
           </ul>
         </nav>
 
@@ -31,44 +37,64 @@
       </div>
     </header>
 
-    <main class="home grid">
-      <section>
-        <div class="main-heading">
-          <h1>A clearer view of your daily reminders</h1>
-          <p>
-            Create a daily schedule and keep a simple record of each occurrence.
-          </p>
+    <main class="home">
+      <div class="main-heading">
+        <h1>A clearer view of your daily reminders</h1>
+        <p>
+          Create a daily schedule and keep a simple record of each occurrence.
+        </p>
+      </div>
+      <section class="grid">
+        <div class="take-action">
+          <div class="wrapper">
+            <h2>Plan your routine</h2>
+            <div class="guide">
+              <p>Choose a name and time for reminder.</p>
+              <p>Check Today when the time arrives and record it as taken.</p>
+            </div>
+            <div class="interactions">
+              <button type="button" class="btn-main">Add reminder</button>
+              <a class="btn-side" href="today.html">View Today</a>
+            </div>
+          </div>
         </div>
-        <div class="wrapper">
-          <h3>Plan your routine</h3>
-          <div class="guide">
-            <p>Choose a name and time for reminder.</p>
-            <p>Check Today when the time arrives and record it as taken.</p>
-          </div>
-          <div class="interactions">
-            <button class="btn-main">Add reminder</button>
-            <button class="btn-side">View Today</button>
-          </div>
+
+        <img
+          class="picture"
+          src="assets/streamline-milano--400x400-PNG/Waiting-3--Streamline-Milano.png"
+          alt=""
+          width="400"
+          height="400"
+        />
+      </section>
+
+      <section class="grid">
+        <img
+          class="picture"
+          src="assets/streamline-milano--400x400-PNG/People-6--Streamline-Milano.png"
+          alt=""
+          width="400"
+          height="400"
+        />
+        <div class="main-info">
+          <h2>How it works</h2>
+          <ol role="list">
+            <li class="flex-list">
+              <div><span>1. Set a time</span></div>
+              <div>Create a daily reminder.</div>
+            </li>
+            <li class="flex-list">
+              <div><span>2. Check Today</span></div>
+              <div>See upcoming and due items.</div>
+            </li>
+            <li class="flex-list">
+              <div><span>3. Record taken</span></div>
+              <div>Review the entry in History.</div>
+            </li>
+          </ol>
         </div>
       </section>
 
-      <section class="main-info">
-        <h1>How it works</h1>
-        <ol>
-          <li class="flex-list">
-            <div><span>1.Set a time</span></div>
-            <div>Create a daily reminder.</div>
-          </li>
-          <li class="flex-list">
-            <div><span>2.Check Today</span></div>
-            <div>See upcoming and due items.</div>
-          </li>
-          <li class="flex-list">
-            <div><span>3.Record taken</span></div>
-            <div>Review the entry in History.</div>
-          </li>
-        </ol>
-      </section>
       <footer>
         <p>
           Reminders work while the app is open. Check your existing care
