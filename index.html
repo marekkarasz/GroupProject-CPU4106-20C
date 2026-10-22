@@ -3,12 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="style.css" />
     <title>Home | MediReminder</title>
   </head>
@@ -56,57 +50,44 @@
       </div>
     </header>
 
-    <main class="home">
+    <main class="home grid-3x4">
       <div class="main-heading">
         <h1>A clearer view of your daily reminders</h1>
         <p>
           Create a daily schedule and keep a simple record of each occurrence.
         </p>
       </div>
-      <section class="grid">
-        <div class="take-action">
-          <div class="wrapper">
-            <h2>Plan your routine</h2>
-            <div class="guide">
-              <p>Choose a name and time for reminder.</p>
-              <p>Check Today when the time arrives and record it as taken.</p>
-            </div>
-            <div class="interactions">
-              <button type="button" class="btn-main">Add reminder</button>
-              <a class="btn-side" href="today.html">View Today</a>
-            </div>
-          </div>
+      <section class="take-action wrapper">
+        <div class="guide">
+          <h2>Plan your routine</h2>
+          <p>Choose a name and time for reminder.</p>
+          <p>Check Today when the time arrives and record it as taken.</p>
         </div>
-
-        <img
-          class="picture"
-          src="assets/streamline-milano--400x400-PNG/Waiting-3--Streamline-Milano.png"
-          alt=""
-        />
+        <div class="interactions">
+          <button type="button" class="btn-main">Add reminder</button>
+          <a class="btn-side" href="today.html">View Today</a>
+        </div>
       </section>
-
-      <section class="grid">
-        <img
-          class="picture"
-          src="assets/streamline-milano--400x400-PNG/People-6--Streamline-Milano.png"
-          alt=""
-        />
-        <div class="main-info">
-          <h2>How it works</h2>
-          <ol role="list">
-            <li class="flex-list">
-              <div><span>1. Set a time</span></div>
-              <div>Create a daily reminder.</div>
-            </li>
-            <li class="flex-list">
-              <div><span>2. Check Today</span></div>
-              <div>See upcoming and due items.</div>
-            </li>
-            <li class="flex-list">
-              <div><span>3. Record taken</span></div>
-              <div>Review the entry in History.</div>
-            </li>
-          </ol>
+      <img
+        class="picture"
+        src="assets/streamline-milano--400x400-PNG/Waiting-3--Streamline-Milano.png"
+        alt=""
+      />
+      <section class="main-info">
+        <h2>How it works</h2>
+        <div class="box-container">
+          <div class="small-box">
+            <h3>. Set a time</h3>
+            <p>Create a daily reminder.</p>
+          </div>
+          <div class="small-box">
+            <h3>2. Check Today</h3>
+            <p>See upcoming and due items.</p>
+          </div>
+          <div class="small-box">
+            <h3>3. Record taken</h3>
+            <p>Review the entry in History.</p>
+          </div>
         </div>
       </section>
 
