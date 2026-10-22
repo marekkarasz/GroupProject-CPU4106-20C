@@ -375,7 +375,6 @@
   }
   .main-info {
     font-size: var(--fs-body-reg);
-    background-color: var(--clr-orange-200);
     border-radius: 15px;
     padding-block: 2rem;
     padding-inline: 2.5rem;
@@ -384,9 +383,10 @@
   }
   .box-container {
     display: flex;
-    gap: 1rem;
     align-items: center;
     justify-content: center;
+    gap: 2rem;
+    margin-block: 1rem;
   }
 
   .main-info h2 {
@@ -394,6 +394,15 @@
     color: var(--clr-heading);
   }
   .small-box {
+    background-color: white;
+    padding-block: 1.5rem;
+    padding-inline: 1rem;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow-GentleFloat);
+  }
+  .small-img {
+    width: 50px;
+    height: 50px;
   }
   .home img {
     margin-inline: auto;
