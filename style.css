@@ -160,7 +160,7 @@
   .sidebar {
     position: sticky;
     top: 0;
-    width: 250px;
+    width: 290px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -168,7 +168,7 @@
     align-items: start;
 
     padding-inline: 2rem;
-    padding-block: 3rem;
+    padding-block: 2rem;
   }
   .sidebar-title {
     font-family: var(--ff-heading);
@@ -177,6 +177,10 @@
     line-height: 1.1;
     color: var(--clr-heading-secondary);
   }
+  .sidebar-heading {
+    border-bottom: 2px solid var(--clr-background-500);
+    align-self: stretch;
+  }
   .sidebar-heading p {
     font-size: var(--fs-body-small);
   }
@@ -184,15 +188,98 @@
     font-size: var(--fs-body-small);
     margin-block-start: auto;
   }
+  .user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .user-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+  }
+  .user-profile {
+    inline-size: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .avatar {
+    inline-size: 60px;
+    block-size: 60px;
+    margin: 0;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .user-name {
+    max-inline-size: 100%;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .login {
+    position: relative;
+    isolation: isolate; /* keeps the ::before behind the text but inside the button */
+    margin-block: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .login::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--clr-yellow-400);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease-out;
+  }
+
+  .login:hover::before,
+  .login:focus-visible::before {
+    transform: scaleX(1);
+  }
+  .register {
+    margin-block: 0.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: 0.25s ease-out;
+  }
+  .divider {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 700;
+    margin-block: 0.5rem;
+    padding-block: 0.5rem;
+  }
+  .hidden {
+    display: none;
+  }
+  [role="list"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
   .sidebar-navigation {
-    padding-block: 2rem;
-    padding-right: 1rem;
+    align-self: stretch;
   }
   .sidebar-navigation a {
     display: block;
     padding: 1rem;
     border-radius: 15px;
-    margin-block: 0.5rem;
+    /* margin-block: 0.5rem; */
     transition:
       transform 0.25s ease,
       box-shadow 0.25s ease;
@@ -299,7 +386,7 @@
   .main-info span {
     font-weight: 600;
   }
-  img {
+  .home img {
     margin-inline: auto;
     margin-block: 2rem;
   }
