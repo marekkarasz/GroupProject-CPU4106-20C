@@ -147,6 +147,9 @@
     font-family: var(--ff-heading);
     color: var(--clr-body-reg);
   }
+  .page:not(.active) {
+    display: none;
+  }
 }
 
 @layer layout {
@@ -420,6 +423,7 @@
     display: grid;
     gap: 2rem;
     margin-block: 2rem;
+    grid-template-rows: repeat(3, 1fr);
   }
   .time {
     font-size: var(--fs-body-large);
@@ -464,5 +468,17 @@
     background-color: var(--clr-yellow-400);
     color: var(--clr-body-reg);
     cursor: pointer;
+  }
+  .card-info {
+    max-width: 900px;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--clr-background-200);
+    padding-block: 1.2rem;
+    padding-inline: 2rem;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow-GentleFloat);
   }
 }

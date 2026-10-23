@@ -1,12 +1,55 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PAGES
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function show() {
+  const id = location.hash.slice(1) || "home";
+
+  // show the matching page, hide the rest
+  document
+    .querySelectorAll(".page")
+    .forEach((p) => p.classList.toggle("active", p.id === id));
+
+  // highlight the matching nav link
+  document.querySelectorAll(".sidebar-navigation a").forEach((a) => {
+    if (a.hash === "#" + id) {
+      a.setAttribute("aria-current", "page");
+    } else {
+      a.removeAttribute("aria-current");
+    }
+  });
+}
+
+window.addEventListener("hashchange", show);
+show();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FORMS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const loginUser = document.querySelector(".login");
-const formDisplay = document.querySelector(".hidden");
-formDisplay.classList.toggle("hidden");
+const loginButton = document.querySelector(".login");
+const loginForm = document.querySelector("#login-form");
+const emailInput = document.querySelector("#user-name");
 
-function revealForm() {}
+loginButton.addEventListener("click", () => {
+  const isHidden = loginForm.classList.toggle("hidden");
+
+  // tell screen readers whether the form is open
+  loginButton.setAttribute("aria-expanded", String(!isHidden));
+
+  // move the cursor into the form when it opens
+  if (!isHidden) emailInput.focus();
+});
+
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault(); // stop the page reloading
+
+  const email = emailInput.value.trim();
+
+  loginForm.classList.add("hidden");
+  loginButton.setAttribute("aria-expanded", "false");
+  loginButton.textContent = "Logged in: " + email;
+  loginForm.reset();
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // USERS

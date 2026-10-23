@@ -26,21 +26,22 @@
             Register
           </button>
         </div>
-        <form action="" class="form hidden">
+        <form action="" class="form hidden" id="login-form">
           <label for="user-name">Your Email: </label>
-          <input type="email" id="user-name" />
+          <input type="email" id="user-name" required />
           <label for="password">Password</label>
-          <input type="password" id="password" />
+          <input type="password" id="password" required />
+          <button type="submit" class="btn-main">Log in</button>
         </form>
       </div>
 
-      <nav class="sidebar-navigation" aria-label="Main">
+      <nav class="sidebar-navigation">
         <ul role="list">
-          <li><a href="index.html" aria-current="page">Home</a></li>
-          <li><a href="today.html">Today</a></li>
-          <li><a href="#">Reminders</a></li>
-          <li><a href="#">History</a></li>
-          <li><a href="#">Settings</a></li>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#reminders">Reminders</a></li>
+          <li><a href="#history">History</a></li>
+          <li><a href="#help">Help</a></li>
         </ul>
       </nav>
 
@@ -50,68 +51,119 @@
       </div>
     </header>
 
-    <main class="home grid-3x4">
-      <div class="main-heading">
-        <h1>A clearer view of your daily reminders</h1>
-        <p>
-          Create a daily schedule and keep a simple record of each occurrence.
-        </p>
-      </div>
-      <section class="take-action wrapper">
-        <div class="guide">
-          <h2>Plan your routine</h2>
-          <p>Choose a name and time for reminder.</p>
-          <p>Check Today when the time arrives and record it as taken.</p>
-        </div>
-        <div class="interactions">
-          <button type="button" class="btn-main">Add reminder</button>
-          <a class="btn-side" href="today.html">View Today</a>
+    <main>
+      <section id="home" class="page">
+        <div class="home grid-3x4">
+          <div class="main-heading">
+            <h1>A clearer view of your daily reminders</h1>
+            <p>
+              Create a daily schedule and keep a simple record of each
+              occurrence.
+            </p>
+          </div>
+          <div class="take-action wrapper">
+            <div class="guide">
+              <h2>Plan your routine</h2>
+              <p>Choose a name and time for reminder.</p>
+              <p>Check Today when the time arrives and record it as taken.</p>
+            </div>
+            <div class="interactions">
+              <button type="button" class="btn-main">Add reminder</button>
+              <a class="btn-side" href="#today">View Today</a>
+            </div>
+          </div>
+          <img
+            class="picture"
+            src="assets/streamline-milano--400x400-PNG/Waiting-3--Streamline-Milano.png"
+            alt=""
+          />
+          <div class="main-info">
+            <h2>How it works</h2>
+            <div class="box-container">
+              <div class="small-box">
+                <h3>1.Set a time</h3>
+                <p>Create a daily reminder.</p>
+                <img
+                  class="small-img"
+                  src="assets/streamline-milano--400x400-PNG/Completed--Streamline-Milano.png"
+                  alt=""
+                />
+              </div>
+              <div class="small-box">
+                <h3>2. Check Today</h3>
+                <p>See upcoming and due items.</p>
+                <img
+                  class="small-img"
+                  src="assets/streamline-milano--400x400-PNG/Be-Patient-3--Streamline-Milano.png"
+                  alt=""
+                />
+              </div>
+              <div class="small-box">
+                <h3>3. Record taken</h3>
+                <p>Review the entry in History.</p>
+                <img
+                  class="small-img"
+                  src="assets/streamline-milano--400x400-PNG/All-Good-1--Streamline-Milano.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <footer>
+            <p>
+              Reminders work while the app is open. Check your existing care
+              instructions.
+            </p>
+          </footer>
         </div>
       </section>
-      <img
-        class="picture"
-        src="assets/streamline-milano--400x400-PNG/Waiting-3--Streamline-Milano.png"
-        alt=""
-      />
-      <section class="main-info">
-        <h2>How it works</h2>
-        <div class="box-container">
-          <div class="small-box">
-            <h3>1.Set a time</h3>
-            <p>Create a daily reminder.</p>
-            <img
-              class="small-img"
-              src="assets/streamline-milano--400x400-PNG/Completed--Streamline-Milano.png"
-              alt=""
-            />
-          </div>
-          <div class="small-box">
-            <h3>2. Check Today</h3>
-            <p>See upcoming and due items.</p>
-            <img
-              class="small-img"
-              src="assets/streamline-milano--400x400-PNG/Be-Patient-3--Streamline-Milano.png"
-              alt=""
-            />
-          </div>
-          <div class="small-box">
-            <h3>3. Record taken</h3>
-            <p>Review the entry in History.</p>
-            <img
-              class="small-img"
-              src="assets/streamline-milano--400x400-PNG/All-Good-1--Streamline-Milano.png"
-              alt=""
-            />
-          </div>
-        </div>
-      </section>
+      <section id="schedule" class="page">
+        <div class="today">
+          <div class="top">
+            <div class="main-heading">
+              <h1>Schedule</h1>
+              <p>Your scheduled occurrences for the current day.</p>
+            </div>
+            <div class="labels">
+              <div class="item"><span>1</span> due</div>
+              <div class="item"><span>1</span> taken</div>
+            </div>
 
-      <footer>
-        <p>
-          Reminders work while the app is open. Check your existing care
-          instructions.
-        </p>
-      </footer>
+            <div class="grid_cards">
+              <article class="card">
+                <time class="time" datetime="09:00">9:00</time>
+                <div class="info">
+                  <h2>Demo reminder A</h2>
+                  <p>Daily reminder, Fictional example</p>
+                </div>
+                <div class="due">
+                  <span class="item status">Due</span>
+                  <button type="button" class="item mark-button">
+                    Mark as taken
+                  </button>
+                </div>
+              </article>
+              <article class="card">
+                <time class="time" datetime="18:00">18:00</time>
+                <div class="info">
+                  <h2>Demo reminder B</h2>
+                  <p>Daily reminder, Fictional example</p>
+                </div>
+                <div class="due">
+                  <span class="item status">Upcoming</span>
+                  <!-- <button type="button" class="item mark-button">Mark as taken</button> -->
+                </div>
+              </article>
+              <article class="card-info">
+                <div class="info">
+                  <h2>Reminder due</h2>
+                  <p>Demo Reminder A is ready to record when taken.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <script src="index.js"></script>
   </body>
