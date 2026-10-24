@@ -7,6 +7,8 @@
     <title>Home | MediReminder</title>
   </head>
   <body>
+    <!-- <<<<<<<<<<<<<<<<<<<<<<< MAIN NAVIGATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
     <header class="sidebar">
       <div class="sidebar-heading">
         <p class="sidebar-title">MediReminder</p>
@@ -52,8 +54,10 @@
     </header>
 
     <main>
+      <!-- <<<<<<<<<<<<<<<<<<<<<<< HOME PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
       <section id="home" class="page">
-        <div class="home grid-3x4">
+        <div class="base_pages_setting grid-3x4">
           <div class="main-heading">
             <h1>A clearer view of your daily reminders</h1>
             <p>
@@ -68,8 +72,8 @@
               <p>Check Today when the time arrives and record it as taken.</p>
             </div>
             <div class="interactions">
-              <button type="button" class="btn-main">Add reminder</button>
-              <a class="btn-side" href="#today">View Today</a>
+              <a href="#add-reminder" class="btn-main"> Add reminder </a>
+              <a class="btn-side" href="#schedule">View Today</a>
             </div>
           </div>
           <img
@@ -77,36 +81,35 @@
             src="assets/streamline-milano--400x400-PNG/Waiting-3--Streamline-Milano.png"
             alt=""
           />
-          <div class="main-info">
+          <div class="main-info how-it-works">
             <h2>How it works</h2>
-            <div class="box-container">
-              <div class="small-box">
-                <h3>1.Set a time</h3>
-                <p>Create a daily reminder.</p>
-                <img
-                  class="small-img"
-                  src="assets/streamline-milano--400x400-PNG/Completed--Streamline-Milano.png"
-                  alt=""
-                />
-              </div>
-              <div class="small-box">
-                <h3>2. Check Today</h3>
-                <p>See upcoming and due items.</p>
-                <img
-                  class="small-img"
-                  src="assets/streamline-milano--400x400-PNG/Be-Patient-3--Streamline-Milano.png"
-                  alt=""
-                />
-              </div>
-              <div class="small-box">
-                <h3>3. Record taken</h3>
-                <p>Review the entry in History.</p>
-                <img
-                  class="small-img"
-                  src="assets/streamline-milano--400x400-PNG/All-Good-1--Streamline-Milano.png"
-                  alt=""
-                />
-              </div>
+
+            <div class="small-box">
+              <h3>1.Set a time</h3>
+              <p>Create a daily reminder.</p>
+              <img
+                class="small-img"
+                src="assets/streamline-milano--400x400-PNG/Completed--Streamline-Milano.png"
+                alt=""
+              />
+            </div>
+            <div class="small-box">
+              <h3>2. Check Today</h3>
+              <p>See upcoming and due items.</p>
+              <img
+                class="small-img"
+                src="assets/streamline-milano--400x400-PNG/Be-Patient-3--Streamline-Milano.png"
+                alt=""
+              />
+            </div>
+            <div class="small-box">
+              <h3>3. Record taken</h3>
+              <p>Review the entry in History.</p>
+              <img
+                class="small-img"
+                src="assets/streamline-milano--400x400-PNG/All-Good-1--Streamline-Milano.png"
+                alt=""
+              />
             </div>
           </div>
           <footer>
@@ -117,54 +120,151 @@
           </footer>
         </div>
       </section>
+
+      <!-- <<<<<<<<<<<<<<<<<<<<<<< SCHEDULE PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
       <section id="schedule" class="page">
-        <div class="today">
-          <div class="top">
-            <div class="main-heading">
+        <div class="base_pages_setting grid-3x4">
+          <div class="main-heading">
+            <div>
               <h1>Schedule</h1>
               <p>Your scheduled occurrences for the current day.</p>
             </div>
+
             <div class="labels">
-              <div class="item"><span>1</span> due</div>
-              <div class="item"><span>1</span> taken</div>
+              <div class="labels-item"><span>1</span> due</div>
+              <div class="labels-item"><span>1</span> taken</div>
+            </div>
+          </div>
+
+          <article class="card">
+            <time class="time" datetime="09:00">9:00</time>
+            <div class="info">
+              <h2>Demo reminder A</h2>
+              <p>Daily reminder, Fictional example</p>
+            </div>
+            <div class="due">
+              <span class="item status">Due</span>
+              <button type="button" class="item mark-button">
+                Mark as taken
+              </button>
+            </div>
+          </article>
+
+          <article class="card">
+            <time class="time" datetime="18:00">18:00</time>
+            <div class="info">
+              <h2>Demo reminder B</h2>
+              <p>Daily reminder, Fictional example</p>
+            </div>
+            <div class="due">
+              <span class="item status">Upcoming</span>
+              <!-- <button type="button" class="item mark-button">Mark as taken</button> -->
+            </div>
+          </article>
+
+          <article class="card-info">
+            <div class="info">
+              <h2>Reminder due</h2>
+              <p>Demo Reminder A is ready to record when taken.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- <<<<<<<<<<<<<<<<<<<<<<< REMINDERS PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+      <section id="reminders" class="page">
+        <div class="base_pages_setting grid-3x4">
+          <div class="main-heading">
+            <div>
+              <h1>Reminders</h1>
+              <p>Manage the daily schedules you have entered.</p>
             </div>
 
-            <div class="grid_cards">
-              <article class="card">
-                <time class="time" datetime="09:00">9:00</time>
-                <div class="info">
-                  <h2>Demo reminder A</h2>
-                  <p>Daily reminder, Fictional example</p>
-                </div>
-                <div class="due">
-                  <span class="item status">Due</span>
-                  <button type="button" class="item mark-button">
-                    Mark as taken
-                  </button>
-                </div>
-              </article>
-              <article class="card">
-                <time class="time" datetime="18:00">18:00</time>
-                <div class="info">
-                  <h2>Demo reminder B</h2>
-                  <p>Daily reminder, Fictional example</p>
-                </div>
-                <div class="due">
-                  <span class="item status">Upcoming</span>
-                  <!-- <button type="button" class="item mark-button">Mark as taken</button> -->
-                </div>
-              </article>
-              <article class="card-info">
-                <div class="info">
-                  <h2>Reminder due</h2>
-                  <p>Demo Reminder A is ready to record when taken.</p>
-                </div>
-              </article>
+            <div class="interactions">
+              <a href="#add-reminder" class="btn-main">Add Reminder</a>
+              <a class="btn-side" href="#schedule">View Today</a>
             </div>
+          </div>
+          <article class="card">
+            <time class="time" datetime="09:00">9:00</time>
+            <div class="info">
+              <h2>Demo reminder A</h2>
+              <p>Daily reminder, Fictional example</p>
+            </div>
+            <div class="due">
+              <span class="item status">Active</span>
+            </div>
+          </article>
+          <article class="card">
+            <time class="time" datetime="09:00">18:00</time>
+            <div class="info">
+              <h2>Demo reminder A</h2>
+              <p>Daily reminder, Fictional example</p>
+            </div>
+            <div class="due">
+              <span class="item status">Active</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- <<<<<<<<<<<<<<<<<<<<<<< ADD REMINDERS PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+      <section id="add-reminder" class="page">
+        <div class="base_pages_setting grid-3x4">
+          <div class="main-heading">
+            <h1>Add Reminder</h1>
+            <p>Enter a name and a daily time for this demonstration.</p>
+          </div>
+          <div class="form_wrapper">
+            <form class="reminder-form" id="reminder-form" novalidate>
+              <div class="field">
+                <label for="reminder-name">Reminder name</label>
+                <input
+                  type="text"
+                  id="reminder-name"
+                  name="name"
+                  placeholder="Click here to use the example name"
+                  maxlength="60"
+                  autocomplete="off"
+                  aria-describedby="name-error"
+                />
+                <p class="error" id="name-error" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="reminder-time">Daily time</label>
+                <div class="time-row">
+                  <input
+                    type="text"
+                    id="reminder-time"
+                    name="time"
+                    placeholder="Choose a time"
+                    aria-describedby="repeat-text time-error"
+                  />
+                  <span id="repeat-text">Repeat every day</span>
+                </div>
+                <p class="error" id="time-error" aria-live="polite"></p>
+              </div>
+
+              <p class="hint">
+                Use the schedule you already follow. No dose advice is provided.
+              </p>
+
+              <div class="interactions">
+                <button type="submit" class="btn-main">Save reminder</button>
+                <a href="#reminders" class="btn-side" id="cancel-reminder"
+                  >Cancel</a
+                >
+              </div>
+            </form>
           </div>
         </div>
       </section>
     </main>
     <script src="index.js"></script>
+    <script src="reminders.js"></script>
   </body>
 </html>

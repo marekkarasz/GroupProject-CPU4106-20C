@@ -80,7 +80,7 @@
     --clr-background-200: hsla(188, 30%, 81%, 0.4);
     --clr-background-300: hsla(188, 30%, 81%, 0.6);
     --clr-background-400: hsla(188, 30%, 81%, 0.8);
-    --clr-background-500: hsl(188, 30%, 81%);
+    --clr-background-500: hsl(188, 99%, 44%);
     --clr-yellow-400: hsl(51, 89%, 79%);
     --clr-heading: hsl(234, 73%, 66%);
     --clr-heading-secondary: var(--clr-orange-400);
@@ -302,7 +302,7 @@
   }
 }
 @layer home {
-  .home {
+  .base_pages_setting {
     /* max-width: 100%; */
     height: 100dvh;
     padding-inline: 2rem;
@@ -310,10 +310,11 @@
     /* margin-inline: auto; */
     background-color: var(--clr-background-100);
   }
-  .home > :last-child {
+  .base_pages_setting > :last-child {
     align-self: end;
   }
   .grid-3x4 {
+    max-width: 1200px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto auto 1fr;
@@ -339,6 +340,7 @@
     align-items: start;
     gap: 1rem;
   }
+
   .wrapper,
   .guide {
     font-size: var(--fs-body-reg);
@@ -374,63 +376,70 @@
     .interactions {
       display: flex;
       gap: 1.5rem;
+      margin-block: 1rem;
     }
   }
   .main-info {
-    font-size: var(--fs-body-reg);
-    border-radius: 15px;
-    padding-block: 2rem;
-    padding-inline: 2.5rem;
-    text-align: center;
     grid-column: span 3;
+    padding-inline: 2rem;
+    padding-block: 1rem;
+    margin: 0;
   }
-  .box-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    margin-block: 1rem;
+  .main-info.how-it-works {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* three equal columns */
+    align-items: stretch; /* equal heights (overrides align-items: center) */
+    gap: 1.5rem;
   }
 
-  .main-info h2 {
-    font-size: var(--fs-h1);
+  .how-it-works h2 {
+    grid-column: 1 / -1; /* heading takes its own full-width row */
+    text-align: center;
     color: var(--clr-heading);
+    font-size: var(--fs-h1);
+    text-align: start;
   }
   .small-box {
+    border-radius: 20px;
     background-color: white;
-    padding-block: 1.5rem;
-    padding-inline: 1rem;
-    border-radius: 15px;
+    padding-block: 1rem;
+    padding-inline: 1.4rem;
     box-shadow: var(--box-shadow-GentleFloat);
   }
-  .small-img {
-    width: 50px;
-    height: 50px;
+  .how-it-works .small-box {
+    display: flex;
+    flex-direction: column;
   }
-  .home img {
+
+  .how-it-works .small-img {
+    width: 120px;
+    height: 120px; /* your PNGs are 400x400, so keep width = height */
+    object-fit: contain; /* never distort, even if a source isn't square */
+    margin-top: auto; /* pushes the images to the bottom so they line up */
+    margin-inline: auto; /* centres them in the box */
+  }
+
+  @media (max-width: 800px) {
+    .main-info.how-it-works {
+      grid-template-columns: 1fr;
+    }
+  }
+  .base_pages_setting > img {
     margin-inline: auto;
-    width: 200px;
-    height: 200px;
-    /* align-self: center; */
   }
   footer {
     margin-block-start: auto;
     grid-column: span 3;
   }
 }
-@layer today {
-  .grid_cards {
-    display: grid;
-    gap: 2rem;
-    margin-block: 2rem;
-    grid-template-rows: repeat(3, 1fr);
-  }
+@layer schedule {
   .time {
     font-size: var(--fs-body-large);
     font-weight: 500;
   }
   .card {
-    max-width: 900px;
+    max-width: 1200px;
+    grid-column: span 3;
     display: flex;
     gap: 2rem;
     justify-content: space-between;
@@ -455,7 +464,19 @@
   }
   .item {
     display: block;
-    background-color: var(--clr-background-200);
+    background-color: var(--clr-orange-200);
+    color: inherit;
+    font-weight: 600;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    margin-block: 0.5rem;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow-SoftCard);
+  }
+  .labels-item {
+    display: block;
+    background-color: var(--clr-background-400);
+    color: inherit;
     font-weight: 600;
     padding-inline: 2rem;
     padding-block: 0.5rem;
@@ -470,15 +491,67 @@
     cursor: pointer;
   }
   .card-info {
-    max-width: 900px;
+    max-width: 1200px;
+    grid-column: span 3;
     display: flex;
     gap: 2rem;
     align-items: center;
     justify-content: flex-start;
-    background-color: var(--clr-background-200);
+    background-color: var(--clr-background-500);
     padding-block: 1.2rem;
     padding-inline: 2rem;
     border-radius: 20px;
     box-shadow: var(--box-shadow-GentleFloat);
+  }
+}
+@layer reminders {
+  .form_wrapper {
+    grid-column: span 3;
+    grid-row: span 2;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 25px;
+    padding-block: 2rem;
+    padding-inline: 2.5rem;
+    margin: 0;
+    box-shadow: var(--box-shadow-layered);
+  }
+  .reminder-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1.5rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  label {
+    font-family: inherit;
+    font-size: var(--fs-body-large);
+  }
+  #reminder-name {
+    width: 600px;
+    padding-block: 0.8rem;
+    padding-inline: 0.5rem;
+    background-color: var(--clr-background-200);
+    border: none;
+    border-radius: 10px;
+    font-size: var(--fs-body-reg);
+  }
+  #reminder-time {
+    width: 200px;
+    padding-block: 0.8rem;
+    padding-inline: 0.5rem;
+    background-color: var(--clr-background-200);
+    border: none;
+    border-radius: 10px;
+    font-size: var(--fs-body-reg);
+  }
+  #repeat-text {
+    padding-inline: 1rem;
+    font-size: var(--fs-body-reg);
   }
 }
