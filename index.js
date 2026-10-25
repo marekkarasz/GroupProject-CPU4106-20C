@@ -10,9 +10,13 @@ function show() {
     .querySelectorAll(".page")
     .forEach((p) => p.classList.toggle("active", p.id === id));
 
-  // highlight the matching nav link
+  //highlight the matching nac link
+  // (a page can borrow another link with data-nav, e.g. the saved page uses 'reminders')
+  const page = document.getElementById(id);
+  const navId = page?.dataset.nav || id;
+
   document.querySelectorAll(".sidebar-navigation a").forEach((a) => {
-    if (a.hash === "#" + id) {
+    if (a.hash === "#" + navId) {
       a.setAttribute("aria-current", "page");
     } else {
       a.removeAttribute("aria-current");

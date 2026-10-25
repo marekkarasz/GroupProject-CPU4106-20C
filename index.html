@@ -69,7 +69,9 @@
             <div class="guide">
               <h2>Plan your routine</h2>
               <p>Choose a name and time for reminder.</p>
-              <p>Check Today when the time arrives and record it as taken.</p>
+              <p>
+                Check the schedule when the time arrives and record it as taken.
+              </p>
             </div>
             <div class="interactions">
               <a href="#add-reminder" class="btn-main"> Add reminder </a>
@@ -94,7 +96,7 @@
               />
             </div>
             <div class="small-box">
-              <h3>2. Check Today</h3>
+              <h3>2. Check Schedule</h3>
               <p>See upcoming and due items.</p>
               <img
                 class="small-img"
@@ -124,7 +126,7 @@
       <!-- <<<<<<<<<<<<<<<<<<<<<<< SCHEDULE PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 
       <section id="schedule" class="page">
-        <div class="base_pages_setting grid-3x4">
+        <div class="base_pages_setting page-grid">
           <div class="main-heading">
             <div>
               <h1>Schedule</h1>
@@ -132,50 +134,43 @@
             </div>
 
             <div class="labels">
-              <div class="labels-item"><span>1</span> due</div>
-              <div class="labels-item"><span>1</span> taken</div>
+              <div class="labels-item"><span id="due-count">0</span> Due</div>
+              <div class="labels-item">
+                <span id="upcoming-count">0</span> Upcoming
+              </div>
+              <div class="labels-item">
+                <span id="taken-count">0</span> Taken
+              </div>
             </div>
           </div>
-
-          <article class="card">
-            <time class="time" datetime="09:00">9:00</time>
-            <div class="info">
-              <h2>Demo reminder A</h2>
-              <p>Daily reminder, Fictional example</p>
-            </div>
-            <div class="due">
-              <span class="item status">Due</span>
-              <button type="button" class="item mark-button">
-                Mark as taken
-              </button>
-            </div>
-          </article>
-
-          <article class="card">
-            <time class="time" datetime="18:00">18:00</time>
-            <div class="info">
-              <h2>Demo reminder B</h2>
-              <p>Daily reminder, Fictional example</p>
-            </div>
-            <div class="due">
-              <span class="item status">Upcoming</span>
-              <!-- <button type="button" class="item mark-button">Mark as taken</button> -->
-            </div>
-          </article>
-
-          <article class="card-info">
+          <article class="card-info hidden" role="status">
             <div class="info">
               <h2>Reminder due</h2>
-              <p>Demo Reminder A is ready to record when taken.</p>
+              <p><span id="info-name"></span> is ready to record when taken.</p>
             </div>
           </article>
+          <div class="card-list" id="schedule-list">
+            <article class="card">
+              <time class="time" datetime="09:00">9:00</time>
+              <div class="info">
+                <h2>Demo reminder A</h2>
+                <p>Daily reminder, Fictional example</p>
+              </div>
+              <div class="due">
+                <span class="item status">Due</span>
+                <button type="button" class="item mark-button">
+                  Mark as taken
+                </button>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
       <!-- <<<<<<<<<<<<<<<<<<<<<<< REMINDERS PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 
       <section id="reminders" class="page">
-        <div class="base_pages_setting grid-3x4">
+        <div class="base_pages_setting page-grid">
           <div class="main-heading">
             <div>
               <h1>Reminders</h1>
@@ -187,32 +182,24 @@
               <a class="btn-side" href="#schedule">View Today</a>
             </div>
           </div>
-          <article class="card">
-            <time class="time" datetime="09:00">9:00</time>
-            <div class="info">
-              <h2>Demo reminder A</h2>
-              <p>Daily reminder, Fictional example</p>
-            </div>
-            <div class="due">
-              <span class="item status">Active</span>
-            </div>
-          </article>
-          <article class="card">
-            <time class="time" datetime="09:00">18:00</time>
-            <div class="info">
-              <h2>Demo reminder A</h2>
-              <p>Daily reminder, Fictional example</p>
-            </div>
-            <div class="due">
-              <span class="item status">Active</span>
-            </div>
-          </article>
+          <div class="card-list" id="reminder-list">
+            <article class="card">
+              <time class="time" datetime="09:00">9:00</time>
+              <div class="info">
+                <h2>Demo reminder A</h2>
+                <p>Daily reminder, Fictional example</p>
+              </div>
+              <div class="due">
+                <span class="item status">Active</span>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
       <!-- <<<<<<<<<<<<<<<<<<<<<<< ADD REMINDERS PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 
-      <section id="add-reminder" class="page">
+      <section id="add-reminder" class="page" data-nav="reminders">
         <div class="base_pages_setting grid-3x4">
           <div class="main-heading">
             <h1>Add Reminder</h1>
@@ -262,6 +249,39 @@
             </form>
           </div>
         </div>
+      </section>
+
+      <!-- <<<<<<<<<<<<<<<<<<<<<<< SAVED REMINDERS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+      <section id="reminder-saved" class="page" data-nav="reminders">
+        <div class="base_pages_setting page-grid">
+          <div class="main-heading">
+            <h1>Reminder Saved</h1>
+            <p>Your new daily schedule is ready</p>
+          </div>
+
+          <div class="wrapper">
+            <div class="due">
+              <span class="item status">Saved</span>
+            </div>
+            <div class="info">
+              <h2 id="saved-name"></h2>
+              <p>
+                Daily at <span id="saved-time"></span>. Tomorow stays scheduled
+                after schedule is taken
+              </p>
+            </div>
+            <div class="interactions">
+              <a href="#schedule" class="btn-main">View Schedule</a>
+              <a class="btn-side" href="#reminders">All Reminders</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- <<<<<<<<<<<<<<<<<<<<<<< HISTORY PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+      <section id="history" class="page">
+        <div class="base_pages_setting"></div>
       </section>
     </main>
     <script src="index.js"></script>

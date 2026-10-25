@@ -7,6 +7,9 @@
   const form = document.getElementById("reminder-form");
   const nameInput = document.getElementById("reminder-name");
   const timeInput = document.getElementById("reminder-time");
+
+  const savedName = document.getElementById("saved-name");
+  const savedTime = document.getElementById("saved-time");
   // Show "Choose a time" until the field is clicked, then switch to a real time picker
   timeInput.addEventListener("focus", () => {
     timeInput.type = "time";
@@ -20,7 +23,8 @@
   const cancelLink = document.getElementById("cancel-reminder");
 
   // Where the reminder cards go (same container as the demo cards)
-  const reminderList = document.querySelector("#reminders .base_pages_setting");
+  const reminderList = document.querySelector("#reminders #reminder-list");
+  const scheduleList = document.getElementById("schedule-list"); //Grab the list of schedules
 
   // ----- Storage (localStorage can be blocked, so use try/catch) -----
   function loadReminders() {
@@ -100,6 +104,99 @@
     storeReminders();
     renderReminders();
   }
+  // Fill the "Reminder saved" page with the reminder that was just saved
+  function showSaved(reminder) {
+    savedName.textContent = reminder.name; // textContent, so typed text can't inject HTML
+    savedTime.textContent = displayTime(reminder.time);
+  }
+  // ---- Schedule page: work out each reminder's state for today --------
+  // Adds a leading zero: 8 -> '08'
+  function pad(number) {
+    return String(number).padStart(2, "0");
+  }
+
+  // Today's local date as "yyyy-mm-dd"(not to ISOS string, which uses UTC)
+  function todayKey() {
+    const now = new Date();
+    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  }
+  function displayDate(dateKey) {
+    const [year, month, day] = dateKey.split("-");
+    return `${day}/${month}/${year.slice(2)}`;
+  }
+  // The current time as "hh:mm", the same format as reminder.time
+  function nowTime() {
+    const now = new Date();
+    return `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  }
+
+  // 'Taken' if recorded today, 'due' if its time has passed, otherwise 'upcoming'
+  function getStatus(reminder) {
+    const takenDates = reminder.takenDates || []; // Older saved reminders have no list
+    if (takenDates.includes(todayKey())) return "taken";
+    if (reminder.time <= nowTime()) return "due";
+    return "upcoming";
+  }
+
+  // What each status say on its badge
+  const STATUS_LABELS = {
+    due: "Due",
+    upcoming: "Upcoming",
+    taken: "Taken",
+  };
+
+  function createScheduleCard(reminder, status) {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.dataset.reminderId = reminder.id;
+    card.dataset.status = status; // for styling each state for the css later
+
+    const time = document.createElement("time");
+    time.className = "time";
+    time.dateTime = reminder.time;
+    time.textContent = displayTime(reminder.time);
+
+    const info = document.createElement("div");
+    info.className = "info";
+    const title = document.createElement("h2");
+    title.textContent = reminder.name;
+    const description = document.createElement("p");
+    description.textContent = "Daily Reminder";
+    info.append(title, description);
+
+    const due = document.createElement("div");
+    due.className = "due";
+    const badge = document.createElement("span");
+    badge.className = "item status";
+    badge.textContent = STATUS_LABELS[status];
+    due.append(badge);
+
+    // Only a due reminder can be recorded as taken
+    if (status === "due") {
+      const markButton = document.createElement("button");
+      markButton.type = "button";
+      markButton.className = "item mark-button";
+      markButton.textContent = "Mark as taken";
+      markButton.setAttribute("aria-label", `Mark ${reminder.name} as taken`);
+      // Click handler comes in step 5 (markTaken)
+      due.append(markButton);
+    }
+    card.append(time, info, due);
+    return card;
+  }
+
+  function renderSchedule() {
+    // Remove cards drawn last time (the exapmle card is left alone)
+    scheduleList
+      .querySelectorAll("[data-reminder-id]")
+      .forEach((card) => card.remove());
+
+    //Earliest time first
+    const sorted = [...reminders].sort((a, b) => a.time.localeCompare(b.time));
+    sorted.forEach((reminder) =>
+      scheduleList.append(createScheduleCard(reminder, getStatus(reminder))),
+    );
+  }
 
   // ----- Form helpers -----
   function showError(input, errorEl, message) {
@@ -159,19 +256,23 @@
       return;
     }
 
-    reminders.push({
+    const newReminder = {
       id: Date.now().toString(),
       name: name,
       time: time,
       createdAt: new Date().toISOString(),
-    });
+      takenDates: [], // days this reminder was recorded as taken, yyyy-mm-dd
+    };
 
+    reminders.push(newReminder);
     storeReminders();
     renderReminders();
+    renderSchedule();
+    showSaved(newReminder);
     clearForm();
 
-    // Go to the Reminders page so the new reminder is visible
-    window.location.hash = "reminders";
+    // Go to the 'Reminder saved' page
+    window.location.hash = "reminder-saved";
   });
 
   // ----- Cancel: clear the form; the link itself goes back to #reminders -----

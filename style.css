@@ -158,6 +158,13 @@
     display: grid;
     grid-template-columns: 290px 1fr;
   }
+  .page-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    align-content: start;
+    gap: 2rem;
+  }
 }
 @layer navigation {
   .sidebar {
@@ -267,9 +274,6 @@
     margin-block: 0.5rem;
     padding-block: 0.5rem;
   }
-  .hidden {
-    display: none;
-  }
   [role="list"] {
     display: flex;
     flex-direction: column;
@@ -304,7 +308,7 @@
 @layer home {
   .base_pages_setting {
     /* max-width: 100%; */
-    height: 100dvh;
+    min-height: 100dvh;
     padding-inline: 2rem;
     padding-block: 3rem;
     /* margin-inline: auto; */
@@ -327,6 +331,7 @@
     grid-column: span 2;
   }
   .wrapper {
+    grid-column: span 2;
     background-color: white;
     border-radius: 25px;
     padding-block: 2rem;
@@ -433,6 +438,12 @@
   }
 }
 @layer schedule {
+  .card-list {
+    display: grid;
+    grid-column: 1 / -1;
+    align-content: start;
+    gap: 2rem;
+  }
   .time {
     font-size: var(--fs-body-large);
     font-weight: 500;
@@ -440,9 +451,10 @@
   .card {
     max-width: 1200px;
     grid-column: span 3;
-    display: flex;
+    display: grid;
+    grid-template-columns: 8rem 1fr auto;
+    align-items: start;
     gap: 2rem;
-    justify-content: space-between;
     background-color: white;
     padding-block: 1.2rem;
     padding-inline: 2rem;
@@ -554,4 +566,7 @@
     padding-inline: 1rem;
     font-size: var(--fs-body-reg);
   }
+}
+.hidden {
+  display: none;
 }
