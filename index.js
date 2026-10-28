@@ -55,6 +55,23 @@ loginForm.addEventListener("submit", (event) => {
   loginForm.reset();
 });
 
+const registerButton = document.querySelector(".register");
+const registerForm = document.querySelector("#register-form");
+const registerName = document.querySelector("#register-name");
+
+registerButton.addEventListener("click", () => {
+  //close the login form so only one form is open at a time
+  loginForm.classList.add("hidden");
+  loginButton.setAttribute("aria-expanded", "false");
+
+  const isHidden = registerForm.classList.toggle("hidden");
+  // tell screen readers whether the form is open
+  registerButton.setAttribute("aria-expanded", String(!isHidden));
+
+  // move the cursor into the form when it opens
+  if (!isHidden) registerName.focus();
+});
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // USERS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

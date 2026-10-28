@@ -7,7 +7,7 @@
     <title>Home | MediReminder</title>
   </head>
   <body>
-    <!-- <<<<<<<<<<<<<<<<<<<<<<< MAIN NAVIGATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> SIDEBAR PANEL SECTION / HEADER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
 
     <header class="sidebar">
       <div class="sidebar-heading">
@@ -15,28 +15,79 @@
         <p>Your daily routine</p>
       </div>
 
+      <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> USER SECTION <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
       <div class="user">
         <ul class="user-list">
           <!-- One item per family member; image and name are placeholders -->
         </ul>
-        <div class="interactions">
+        <div class="login_items">
           <button type="button" class="login" aria-expanded="false">
             Login
           </button>
-          <div class="divider">|</div>
+          <div class="divider"></div>
           <button type="button" class="register" aria-expanded="false">
             Register
           </button>
         </div>
+        <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> LOGIN FORM <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
         <form action="" class="form hidden" id="login-form">
-          <label for="user-name">Your Email: </label>
-          <input type="email" id="user-name" required />
-          <label for="password">Password</label>
-          <input type="password" id="password" required />
-          <button type="submit" class="btn-main">Log in</button>
+          <label for="user-name" class="login_label">Your Email: </label>
+          <input type="email" id="user-name" required class="login_input" />
+          <label for="password" class="login_label">Password:</label>
+          <input type="password" id="password" required class="login_input" />
+          <button type="submit" class="btn-login">Log in</button>
+        </form>
+
+        <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REGISTER FORM <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+        <form action="" class="form hidden" id="register-form">
+          <label for="register-name" class="login_label">Your name: </label>
+          <input
+            type="text"
+            id="register-name"
+            required
+            class="login_input"
+            placeholder="Enter your full name ..."
+          />
+
+          <label for="register-email" class="login_label">Your email: </label>
+          <input
+            type="email"
+            id="register-email"
+            required
+            class="login_input"
+            placeholder="Enter valid email ..."
+          />
+
+          <label for="register-dob" class="login_label">Date of birth: </label>
+          <input type="date" id="register-dob" class="login_input" required />
+
+          <label for="register-password" class="login_label">Password: </label>
+          <input
+            type="password"
+            id="register-password"
+            class="login_input"
+            placeholder="At least 6 charachters"
+            required
+            minlength="6"
+          />
+
+          <label for="confirm-password" class="login_label"
+            >Confirm password:
+          </label>
+          <input
+            type="password"
+            id="confirm-password"
+            class="login_input"
+            required
+          />
+
+          <button type="submit" class="btn-login">Register</button>
         </form>
       </div>
 
+      <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAIN NAVIGATION <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
       <nav class="sidebar-navigation">
         <ul role="list">
           <li><a href="#home">Home</a></li>
@@ -54,7 +105,7 @@
     </header>
 
     <main>
-      <!-- <<<<<<<<<<<<<<<<<<<<<<< HOME PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+      <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> HOME PAGE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
 
       <section id="home" class="page">
         <div class="base_pages_setting grid-3x4">
@@ -208,7 +259,9 @@
           <div class="form_wrapper">
             <form class="reminder-form" id="reminder-form" novalidate>
               <div class="field">
-                <label for="reminder-name">Reminder name</label>
+                <label for="reminder-name" class="reminder_label"
+                  >Reminder name</label
+                >
                 <input
                   type="text"
                   id="reminder-name"
@@ -222,7 +275,9 @@
               </div>
 
               <div class="field">
-                <label for="reminder-time">Daily time</label>
+                <label for="reminder-time" class="reminder_label"
+                  >Daily time</label
+                >
                 <div class="time-row">
                   <input
                     type="text"
