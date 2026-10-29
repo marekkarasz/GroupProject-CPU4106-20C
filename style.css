@@ -134,6 +134,7 @@
     font-family: var(--ff-body);
     font-size: var(--fs-body-small);
     color: var(--clr-body-reg);
+    background-color: var(--clr-background-200);
   }
   h1 {
     font-size: var(--fs-h1);
@@ -177,7 +178,6 @@
     min-height: 100dvh;
     padding-inline: 2rem;
     padding-block: 3rem;
-    background-color: var(--clr-background-100);
   }
   .base_pages_setting > :last-child {
     align-self: end;
@@ -212,7 +212,18 @@
     padding-inline: 2rem;
     border-radius: 15px;
     cursor: pointer;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      color 0.25s ease;
   }
+  .btn-main:hover,
+  .btn-main:focus-visible {
+    background-color: var(--clr-background-200);
+    box-shadow: var(--box-shadow-inset);
+    color: var(--clr-orange-400);
+  }
+
   .btn-side {
     border: none;
     line-height: 1.1;
@@ -224,6 +235,16 @@
     padding-inline: 2rem;
     border-radius: 15px;
     cursor: pointer;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      color 0.25s ease;
+  }
+  .btn-side:hover,
+  .btn-side:focus-visible {
+    background-color: var(--clr-background-500);
+    box-shadow: var(--box-shadow-inset);
+    color: white;
   }
   .interactions {
     display: flex;
@@ -318,6 +339,7 @@
     padding-block: 1rem;
 
     box-shadow: var(--box-shadow-border);
+    background-color: white;
   }
   .login_items {
     display: flex;
@@ -510,7 +532,6 @@
   .sidebar-navigation a:active {
     color: var(--clr-heading-secondary);
     font-weight: 700;
-    box-shadow: var(--box-shadow-SoftCard);
     transform: translateY(-4px);
   }
   .sidebar-navigation a[aria-current="page"] {
