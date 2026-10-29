@@ -68,7 +68,7 @@
             type="password"
             id="register-password"
             class="login_input"
-            placeholder="At least 6 charachters"
+            placeholder="At least 6 characters"
             required
             minlength="6"
           />
@@ -323,7 +323,7 @@
               <h2 id="saved-name"></h2>
               <p>
                 Daily at <span id="saved-time"></span>. Tomorow stays scheduled
-                after schedule is taken
+                after this one is taken.
               </p>
             </div>
             <div class="interactions">
@@ -336,7 +336,38 @@
       <!-- <<<<<<<<<<<<<<<<<<<<<<< HISTORY PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 
       <section id="history" class="page">
-        <div class="base_pages_setting"></div>
+        <div class="base_pages_setting page-grid">
+          <div class="main-heading">
+            <h1>History</h1>
+            <p>Review recorded occurrences.</p>
+          </div>
+          <div class="history_card">
+            <table class="history_table">
+              <thead>
+                <tr>
+                  <th>Reminder</th>
+                  <th>Scheduled</th>
+                  <th>Taken at</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="history-body">
+                <tr>
+                  <td>Demo Reminder A</td>
+                  <td>9:00</td>
+                  <td>9:05</td>
+                  <td>Taken</td>
+                </tr>
+                <tr>
+                  <td>Demo Reminder B</td>
+                  <td>18:00</td>
+                  <td>Not Recorded</td>
+                  <td>Upcoming</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </main>
     <script src="index.js"></script>

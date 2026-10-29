@@ -26,6 +26,10 @@
   const reminderList = document.querySelector("#reminders #reminder-list");
   const scheduleList = document.getElementById("schedule-list"); //Grab the list of schedules
 
+  //History card is right here Starting with a table body
+  const historyBody = document.getElementById("history-body");
+  const demoHistoryRows = historyBody.innerHTML;
+
   // ----- Storage (localStorage can be blocked, so use try/catch) -----
   function loadReminders() {
     try {
@@ -103,6 +107,8 @@
     reminders = reminders.filter((reminder) => reminder.id !== id);
     storeReminders();
     renderReminders();
+    renderSchedule();
+    renderHistory();
   }
   // Fill the "Reminder saved" page with the reminder that was just saved
   function showSaved(reminder) {
@@ -197,7 +203,38 @@
       scheduleList.append(createScheduleCard(reminder, getStatus(reminder))),
     );
   }
+  // ----- History page: table of reminders -----
+  // Builds one <tr> with four <td> cells
+  function createHistoryRow(reminder, status) {
+    const row = document.createElement("tr");
+    row.dataset.reminderId = reminder.id;
 
+    const cells = [
+      reminder.name,
+      displayTime(reminder.time),
+      "Not Recorded", // the taken time isnt saved yet, comes with markTaken
+      STATUS_LABELS[status],
+    ];
+    cells.forEach((text) => {
+      const cell = document.createElement("td");
+      cell.textContent = text; // textcontent, so typed text cant inject html
+      row.append(cell);
+    });
+    return row;
+  }
+  function renderHistory() {
+    //no reminders yet: keep the demo rows from the html
+    if (reminders.length === 0) {
+      historyBody.innerHTML = demoHistoryRows;
+      return;
+    }
+    historyBody.innerHTML = ""; // remove the demo rows / rows drawn last time
+    //earliest time first
+    const sorted = [...reminders].sort((a, b) => a.time.localeCompare(b.time));
+    sorted.forEach((reminder) =>
+      historyBody.append(createHistoryRow(reminder, getStatus(reminder))),
+    );
+  }
   // ----- Form helpers -----
   function showError(input, errorEl, message) {
     errorEl.textContent = message;
@@ -268,6 +305,7 @@
     storeReminders();
     renderReminders();
     renderSchedule();
+    renderHistory();
     showSaved(newReminder);
     clearForm();
 
@@ -280,4 +318,6 @@
 
   // Draw saved reminders when the page loads
   renderReminders();
+  renderSchedule();
+  renderHistory();
 })();
