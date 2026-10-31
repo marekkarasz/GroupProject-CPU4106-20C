@@ -28,7 +28,13 @@
 
   //History card is right here Starting with a table body
   const historyBody = document.getElementById("history-body");
-  const demoHistoryRows = historyBody.innerHTML;
+
+  // The Due / Upcoming / Taken counters at the top of the Schedule page
+  const counters = {
+    due: document.getElementById("due-count"),
+    upcoming: document.getElementById("upcoming-count"),
+    taken: document.getElementById("taken-count"),
+  };
 
   // ----- Storage (localStorage can be blocked, so use try/catch) -----
   function loadReminders() {
@@ -106,9 +112,7 @@
   function deleteReminder(id) {
     reminders = reminders.filter((reminder) => reminder.id !== id);
     storeReminders();
-    renderReminders();
-    renderSchedule();
-    renderHistory();
+    renderAll();
   }
   // Fill the "Reminder saved" page with the reminder that was just saved
   function showSaved(reminder) {
@@ -202,6 +206,25 @@
     sorted.forEach((reminder) =>
       scheduleList.append(createScheduleCard(reminder, getStatus(reminder))),
     );
+
+    updateCounters();
+  }
+
+  // Count the schedule cards by status and show the numbers in the counters.
+  // No reminders yet: count the demo card(s), so the counters match the example.
+  function updateCounters() {
+    const selector = reminders.length > 0 ? "[data-reminder-id]" : "[data-demo]";
+    const cards = scheduleList.querySelectorAll(selector);
+
+    const totals = { due: 0, upcoming: 0, taken: 0 };
+    cards.forEach((card) => {
+      // each card carries its status in data-status ("due", "upcoming" or "taken")
+      if (card.dataset.status in totals) totals[card.dataset.status]++;
+    });
+
+    Object.keys(counters).forEach((status) => {
+      counters[status].textContent = totals[status];
+    });
   }
   // ----- History page: table of reminders -----
   // Builds one <tr> with four <td> cells
@@ -223,17 +246,36 @@
     return row;
   }
   function renderHistory() {
-    //no reminders yet: keep the demo rows from the html
-    if (reminders.length === 0) {
-      historyBody.innerHTML = demoHistoryRows;
-      return;
-    }
-    historyBody.innerHTML = ""; // remove the demo rows / rows drawn last time
+    // Remove rows drawn last time (the demo rows are left alone, updateDemos hides them)
+    historyBody
+      .querySelectorAll("[data-reminder-id]")
+      .forEach((row) => row.remove());
+
     //earliest time first
     const sorted = [...reminders].sort((a, b) => a.time.localeCompare(b.time));
     sorted.forEach((reminder) =>
       historyBody.append(createHistoryRow(reminder, getStatus(reminder))),
     );
+  }
+
+  // ----- Demo examples: shown only while the user has no reminders -----
+  // Every example in the HTML is tagged with data-demo. One rule for all panels:
+  // no reminders -> show the examples, at least one reminder -> hide them.
+  // Uses the .hidden class from style.css (the hidden attribute would lose to .card's display: grid)
+  function updateDemos() {
+    const hasReminders = reminders.length > 0;
+    document
+      .querySelectorAll("[data-demo]")
+      .forEach((demo) => demo.classList.toggle("hidden", hasReminders));
+  }
+
+  // Redraw every panel that shows reminders. Call this after any change to `reminders`,
+  // so a new panel only needs adding here.
+  function renderAll() {
+    renderReminders();
+    renderSchedule();
+    renderHistory();
+    updateDemos();
   }
   // ----- Form helpers -----
   function showError(input, errorEl, message) {
@@ -303,9 +345,7 @@
 
     reminders.push(newReminder);
     storeReminders();
-    renderReminders();
-    renderSchedule();
-    renderHistory();
+    renderAll();
     showSaved(newReminder);
     clearForm();
 
@@ -316,8 +356,6 @@
   // ----- Cancel: clear the form; the link itself goes back to #reminders -----
   cancelLink.addEventListener("click", clearForm);
 
-  // Draw saved reminders when the page loads
-  renderReminders();
-  renderSchedule();
-  renderHistory();
+  // Draw saved reminders (or the demo examples) when the page loads
+  renderAll();
 })();

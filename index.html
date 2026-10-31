@@ -97,11 +97,6 @@
           <li><a href="#help">Help</a></li>
         </ul>
       </nav>
-
-      <div class="sidebar-bottom">
-        <p>Coursework prototype</p>
-        <p>Fictional records only</p>
-      </div>
     </header>
 
     <main>
@@ -201,7 +196,9 @@
             </div>
           </article>
           <div class="card-list" id="schedule-list">
-            <article class="card">
+            <!-- data-demo: example card, hidden once the user saves a reminder.
+                 data-status: lets the Due/Upcoming/Taken counters count it -->
+            <article class="card" data-demo data-status="due">
               <time class="time" datetime="09:00">9:00</time>
               <div class="info">
                 <h2>Demo reminder A</h2>
@@ -234,7 +231,8 @@
             </div>
           </div>
           <div class="card-list" id="reminder-list">
-            <article class="card">
+            <!-- data-demo: example card, hidden once the user saves a reminder -->
+            <article class="card" data-demo>
               <time class="time" datetime="09:00">9:00</time>
               <div class="info">
                 <h2>Demo reminder A</h2>
@@ -352,13 +350,14 @@
                 </tr>
               </thead>
               <tbody id="history-body">
-                <tr>
+                <!-- data-demo: example rows, hidden once the user saves a reminder -->
+                <tr data-demo>
                   <td>Demo Reminder A</td>
                   <td>9:00</td>
                   <td>9:05</td>
                   <td>Taken</td>
                 </tr>
-                <tr>
+                <tr data-demo>
                   <td>Demo Reminder B</td>
                   <td>18:00</td>
                   <td>Not Recorded</td>

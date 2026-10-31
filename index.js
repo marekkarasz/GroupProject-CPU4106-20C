@@ -35,6 +35,10 @@ const loginForm = document.querySelector("#login-form");
 const emailInput = document.querySelector("#user-name");
 
 loginButton.addEventListener("click", () => {
+  // close the register form so only one form is open at a time
+  registerForm.classList.add("hidden");
+  registerButton.setAttribute("aria-expanded", "false");
+
   const isHidden = loginForm.classList.toggle("hidden");
 
   // tell screen readers whether the form is open
@@ -75,24 +79,28 @@ registerButton.addEventListener("click", () => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // USERS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const users = [
-  {
-    id: 1,
-    name: "User name",
-    avatar: "assets/streamline-milano--400x400-PNG/User/User_Circle.svg",
-    reminders: [
-      // example shape for later:
-      // { id: 1, name: "Vitamin D", time: "08:00", history: [] }
-    ],
-  },
-];
+// Real users go in here once registering works.
+// example shape for later:
+// { id: 1, name: "Jane", avatar: "...", reminders: [{ id: 1, name: "Vitamin D", time: "08:00", history: [] }] }
+const users = [];
+
+// Example user shown while `users` is empty (same idea as the demo cards in the pages).
+// It disappears as soon as a real user is added, and comes back if the list is empty again.
+const DEMO_USER = {
+  id: "demo",
+  name: "User name",
+  avatar: "assets/streamline-milano--400x400-PNG/User/User_Circle.svg",
+};
 
 const userList = document.querySelector(".user-list");
 function renderUsers() {
   if (!userList) return; //stops errors on pages without a user list
   userList.innerHTML = ""; // clear before rebuilding
 
-  users.forEach((user) => {
+  // No real users yet: draw the example user instead
+  const shown = users.length > 0 ? users : [DEMO_USER];
+
+  shown.forEach((user) => {
     const li = document.createElement("li");
     li.className = "user-profile";
     li.dataset.userId = user.id;

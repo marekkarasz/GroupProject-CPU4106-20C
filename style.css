@@ -330,6 +330,7 @@
     top: 0;
     width: 290px;
     height: 100vh;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -362,10 +363,7 @@
   .sidebar-heading p {
     font-size: var(--fs-body-small);
   }
-  .sidebar-bottom {
-    font-size: var(--fs-body-small);
-    margin-block-start: auto;
-  }
+
   .user {
     display: flex;
     flex-direction: column;
