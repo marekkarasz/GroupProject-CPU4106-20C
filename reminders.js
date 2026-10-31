@@ -88,7 +88,7 @@
     status.textContent = "Active";
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
-    deleteButton.className = "item mark-button";
+    deleteButton.className = "item delete-button";
     deleteButton.textContent = "Delete";
     deleteButton.setAttribute("aria-label", `Delete ${reminder.name}`);
     deleteButton.addEventListener("click", () => deleteReminder(reminder.id));
@@ -140,10 +140,15 @@
     return `${pad(now.getHours())}:${pad(now.getMinutes())}`;
   }
 
+  // Today's record for this reminder ({ date, takenAt }), or undefined if not taken today
+  function takenToday(reminder) {
+    const history = reminder.history || []; // Older saved reminders have no history list
+    return history.find((entry) => entry.date === todayKey());
+  }
+
   // 'Taken' if recorded today, 'due' if its time has passed, otherwise 'upcoming'
   function getStatus(reminder) {
-    const takenDates = reminder.takenDates || []; // Older saved reminders have no list
-    if (takenDates.includes(todayKey())) return "taken";
+    if (takenToday(reminder)) return "taken";
     if (reminder.time <= nowTime()) return "due";
     return "upcoming";
   }
@@ -188,7 +193,7 @@
       markButton.className = "item mark-button";
       markButton.textContent = "Mark as taken";
       markButton.setAttribute("aria-label", `Mark ${reminder.name} as taken`);
-      // Click handler comes in step 5 (markTaken)
+      markButton.addEventListener("click", () => markTaken(reminder.id));
       due.append(markButton);
     }
     card.append(time, info, due);
@@ -226,16 +231,52 @@
       counters[status].textContent = totals[status];
     });
   }
+
+  // ----- Mark as taken -----
+  // The clicked button disappears when the card is redrawn, so keyboard focus
+  // moves to the card itself instead of being lost at the top of the page
+  function focusCard(card) {
+    card.tabIndex = -1; // -1: focusable from code, but not added to the Tab order
+    card.focus();
+  }
+
+  // Record that a due reminder was taken today, at the current time
+  function markTaken(id) {
+    const reminder = reminders.find((r) => r.id === id);
+    if (!reminder || getStatus(reminder) !== "due") return; // only due reminders can be taken
+
+    reminder.history = reminder.history || []; // Older saved reminders have no history list
+    reminder.history.push({ date: todayKey(), takenAt: nowTime() });
+
+    storeReminders();
+    renderAll();
+    focusCard(scheduleList.querySelector(`[data-reminder-id="${id}"]`));
+  }
+
+  // The example card's "Mark as taken" shows what would happen, but saves nothing.
+  // Reloading the page puts the example back to "Due".
+  const demoMarkButton = scheduleList.querySelector("[data-demo] .mark-button");
+  demoMarkButton?.addEventListener("click", () => {
+    const demoCard = demoMarkButton.closest(".card");
+    demoCard.dataset.status = "taken";
+    demoCard.querySelector(".status").textContent = STATUS_LABELS.taken;
+    demoMarkButton.remove();
+    updateCounters();
+    focusCard(demoCard);
+  });
+
   // ----- History page: table of reminders -----
   // Builds one <tr> with four <td> cells
   function createHistoryRow(reminder, status) {
     const row = document.createElement("tr");
     row.dataset.reminderId = reminder.id;
 
+    const record = takenToday(reminder); // today's { date, takenAt }, if taken
+
     const cells = [
       reminder.name,
       displayTime(reminder.time),
-      "Not Recorded", // the taken time isnt saved yet, comes with markTaken
+      record ? displayTime(record.takenAt) : "Not Recorded",
       STATUS_LABELS[status],
     ];
     cells.forEach((text) => {
@@ -269,6 +310,13 @@
       .forEach((demo) => demo.classList.toggle("hidden", hasReminders));
   }
 
+  // Every reminder's status in one string, e.g. "taken,due,upcoming".
+  // Used by the timer at the bottom to spot when something has changed.
+  function statusSnapshot() {
+    return reminders.map((reminder) => getStatus(reminder)).join(",");
+  }
+  let lastSnapshot = ""; // the statuses as they were at the last renderAll()
+
   // Redraw every panel that shows reminders. Call this after any change to `reminders`,
   // so a new panel only needs adding here.
   function renderAll() {
@@ -276,6 +324,7 @@
     renderSchedule();
     renderHistory();
     updateDemos();
+    lastSnapshot = statusSnapshot();
   }
   // ----- Form helpers -----
   function showError(input, errorEl, message) {
@@ -340,7 +389,7 @@
       name: name,
       time: time,
       createdAt: new Date().toISOString(),
-      takenDates: [], // days this reminder was recorded as taken, yyyy-mm-dd
+      history: [], // one entry per day it was taken: { date: "yyyy-mm-dd", takenAt: "hh:mm" }
     };
 
     reminders.push(newReminder);
@@ -358,4 +407,12 @@
 
   // Draw saved reminders (or the demo examples) when the page loads
   renderAll();
+
+  // ----- Keep statuses current while the app is open -----
+  // A reminder turns from 'upcoming' to 'due' when its time arrives, and back to
+  // 'upcoming' after midnight. Check every 15 seconds, but only redraw when a status
+  // has changed since the last draw, so the page (and keyboard focus) isn't reset for nothing.
+  setInterval(() => {
+    if (statusSnapshot() !== lastSnapshot) renderAll();
+  }, 15000);
 })();

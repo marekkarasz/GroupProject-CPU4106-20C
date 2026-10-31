@@ -91,6 +91,11 @@
     --clr-orange-400: hsl(17, 81%, 63%);
     --clr-orange-200: hsl(17, 70%, 82%);
     --clr-orange-100: hsl(17, 46%, 88%);
+
+    /* Reminder status badges (Schedule page) */
+    --clr-blue-200: hsl(188, 70%, 82%); /* upcoming: the background blue, more saturated */
+    --clr-green-200: hsl(145, 50%, 82%); /* taken: done, all good */
+
     --clr-body-reg: hsl(189, 66%, 16%);
     --fs-h1: 2.5rem; /*40px*/
     --fs-h2: 2rem; /*32px*/
@@ -315,11 +320,126 @@
     border-radius: 10px;
     box-shadow: var(--box-shadow-SoftCard);
   }
-  .mark-button {
+  /* "Delete" on the Reminders page: keeps the plain yellow look, turns orange on hover as a "careful" hint */
+  .delete-button {
     border: none;
     background-color: var(--clr-yellow-400);
     color: var(--clr-body-reg);
     cursor: pointer;
+    transition:
+      background-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .delete-button:hover,
+  .delete-button:focus-visible {
+    background-color: var(--clr-orange-200);
+    box-shadow: var(--box-shadow-inset);
+  }
+
+  /* "Mark as taken": the only dark element on a card, so it's the obvious next step.
+     Hover / keyboard focus previews the result: the Taken green sweeps in and the circle gets a tick. */
+  .mark-button {
+    position: relative;
+    isolation: isolate; /* keeps the green sweep (::before) behind the text, like .login/.register */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border: none;
+    background-color: var(--clr-body-reg);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--box-shadow-layered);
+    transition:
+      color 0.3s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  /* the green sweep, hidden (scaled to 0 width) until hover */
+  .mark-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--clr-green-200);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
+  }
+  /* the circle in front of the text: empty like an unticked box, the ✓ is there but transparent */
+  .mark-button::after {
+    content: "✓";
+    order: -1; /* flex order: show it before the text */
+    display: grid;
+    place-items: center;
+    inline-size: 1.5em;
+    block-size: 1.5em;
+    flex: none;
+    border: 2px solid white;
+    border-radius: 50%;
+    font-size: 0.85em;
+    color: transparent;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .mark-button:hover,
+  .mark-button:focus-visible {
+    color: var(--clr-body-reg);
+    transform: translateY(-2px); /* small lift */
+    box-shadow: var(--box-shadow-diffused);
+  }
+  .mark-button:focus-visible {
+    outline: 3px solid var(--clr-heading);
+    outline-offset: 3px;
+  }
+  .mark-button:hover::before,
+  .mark-button:focus-visible::before {
+    transform: scaleX(1);
+  }
+  .mark-button:hover::after,
+  .mark-button:focus-visible::after {
+    background-color: var(--clr-body-reg);
+    border-color: var(--clr-body-reg);
+    color: white;
+    animation: tick-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1); /* overshoots a little, then settles */
+  }
+  /* pressed: sinks back down */
+  .mark-button:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: var(--box-shadow-inset);
+  }
+
+  @keyframes tick-pop {
+    from {
+      transform: scale(0.4);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* People who turn off animations in their system settings get the colour change only */
+  @media (prefers-reduced-motion: reduce) {
+    .mark-button,
+    .mark-button::before,
+    .mark-button::after {
+      transition: none;
+      animation: none;
+    }
+    .mark-button:hover,
+    .mark-button:focus-visible,
+    .mark-button:active {
+      transform: none;
+    }
+    .mark-button:hover::after,
+    .mark-button:focus-visible::after {
+      animation: none;
+    }
   }
 }
 
@@ -631,6 +751,18 @@
     padding-inline: 2rem;
     border-radius: 20px;
     box-shadow: var(--box-shadow-GentleFloat);
+  }
+
+  /* Status badge colour follows the card's data-status (set in reminders.js and on the demo card).
+     The badge text still says the status, so the colour is a helper, not the only signal. */
+  .card[data-status="upcoming"] .status {
+    background-color: var(--clr-blue-200);
+  }
+  .card[data-status="due"] .status {
+    background-color: var(--clr-yellow-200); /* pairs with the stronger yellow "Mark as taken" button */
+  }
+  .card[data-status="taken"] .status {
+    background-color: var(--clr-green-200);
   }
 }
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.    REMINDERS AND ADD REMINDERS PAGE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
