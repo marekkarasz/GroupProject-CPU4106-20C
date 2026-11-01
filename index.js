@@ -27,6 +27,70 @@ function show() {
 window.addEventListener("hashchange", show);
 show();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// HEADER MENUS (tablet / phone)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Both buttons are only visible up to 1024px wide (see RESPONSIVE in style.css).
+// Hamburger: adds .menu-open to the header -> icon turns into a cross, nav panel drops down.
+// User icon: adds .user-open to the header -> login / register panel drops down.
+// Only one panel is open at a time.
+
+const header = document.querySelector(".sidebar");
+const menuButton = document.querySelector(".menu-toggle");
+const userButton = document.querySelector(".user-toggle");
+
+function setMenu(open) {
+  if (open) setUserMenu(false); // close the other panel first
+  header.classList.toggle("menu-open", open);
+
+  // tell screen readers whether the menu is open, and what the button will do next
+  menuButton.setAttribute("aria-expanded", String(open));
+  menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+}
+
+function setUserMenu(open) {
+  if (open) setMenu(false); // close the other panel first
+  header.classList.toggle("user-open", open);
+
+  userButton.setAttribute("aria-expanded", String(open));
+  userButton.setAttribute(
+    "aria-label",
+    open ? "Close account menu" : "Open account menu",
+  );
+}
+
+menuButton.addEventListener("click", () => {
+  setMenu(!header.classList.contains("menu-open"));
+});
+
+userButton.addEventListener("click", () => {
+  setUserMenu(!header.classList.contains("user-open"));
+});
+
+// picking a page (any link that changes the #hash) closes both panels
+window.addEventListener("hashchange", () => {
+  setMenu(false);
+  setUserMenu(false);
+});
+
+// Escape closes whichever panel is open, and puts the keyboard focus back on its button
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+
+  if (header.classList.contains("menu-open")) {
+    setMenu(false);
+    menuButton.focus();
+  } else if (header.classList.contains("user-open")) {
+    setUserMenu(false);
+    userButton.focus();
+  }
+});
+
+// widening the window past tablet size (or rotating a tablet) resets both panels
+window.matchMedia("(max-width: 1024px)").addEventListener("change", () => {
+  setMenu(false);
+  setUserMenu(false);
+});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FORMS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

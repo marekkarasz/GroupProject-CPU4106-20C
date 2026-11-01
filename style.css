@@ -1,5 +1,5 @@
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.    LAYER ORDER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-@layer reset, root, base, layout, components, navigation, home, schedule, reminders, historyPage, helpPage;
+@layer reset, root, base, layout, components, navigation, home, schedule, reminders, historyPage, helpPage, responsive;
 @layer reset {
   *,
   *::before,
@@ -733,6 +733,15 @@
     box-shadow: var(--box-shadow-SoftCard);
     font-weight: 700;
   }
+  /* Hamburger and account buttons: hidden on laptop, switched on for tablet/phone in the RESPONSIVE layer */
+  .menu-toggle,
+  .user-toggle {
+    display: none;
+  }
+  /* the panel wrapper adds no box of its own here, so the sidebar layout is unchanged */
+  .sidebar-panel {
+    display: contents;
+  }
 }
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.    HOME PAGE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 @layer home {
@@ -947,6 +956,437 @@
     width: 86%;
     height: 86%;
     object-fit: contain;
+  }
+}
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.    RESPONSIVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+/* Last layer, so these rules win over every page layer above.
+   Desktop (wider than 1340px) is unchanged. Going down in width:
+   1340px  laptop      – smaller picture inside the Add Reminder form
+   1240px  laptop      – that form picture is hidden (no room next to the inputs)
+   1199px  small laptop – corner pictures move to the bottom of their page
+   1100px  small laptop – Reminder Saved: panel and picture stack
+   1024px  tablet      – sidebar becomes a yellow header bar with hamburger + account menus
+    900px  tablet      – smaller text (see TYPE SCALE)
+    600px  phone       – one column everywhere, smaller text, stacked cards
+    400px  small phone – smallest text */
+@layer responsive {
+  /* the name input fills the form on smaller screens, but never grows past its desktop size */
+  #reminder-name {
+    width: 100%;
+    max-width: 600px;
+  }
+  .reminder-form .field {
+    align-self: stretch; /* gives the 100% above a full-width box to fill */
+  }
+  /* on shorter laptop screens the sidebar picture shrinks instead of adding a scrollbar */
+  .side-deco {
+    flex-shrink: 1;
+    min-height: 0;
+    object-fit: contain;
+  }
+  @media (max-height: 640px) {
+    .side-deco {
+      display: none;
+    }
+  }
+
+  /* ---------- TYPE SCALE ----------
+     Every text size in the app comes from these --fs-* variables (set in :root, ROOT SETTINGS),
+     so changing them here shrinks all the text together. Steps get smaller as the screen does.
+                     desktop  ≤900px  ≤600px  ≤400px
+     h1  page title     40      34      28      26
+     h2                 32      28      24      22
+     h3  card titles    28      24      20      19
+     body-large         24      21      18      17
+     body-reg           19      18      16      15
+     body-small         16      16      15      14   (normal text, buttons, labels) */
+  @media (max-width: 900px) {
+    /* tablet */
+    :root {
+      --fs-h1: 2.125rem;
+      --fs-h2: 1.75rem;
+      --fs-h3: 1.5rem;
+      --fs-body-large: 1.3rem;
+      --fs-body-reg: 1.125rem;
+    }
+  }
+  @media (max-width: 600px) {
+    /* phone */
+    :root {
+      --fs-h1: 1.75rem;
+      --fs-h2: 1.5rem;
+      --fs-h3: 1.25rem;
+      --fs-body-large: 1.125rem;
+      --fs-body-reg: 1rem;
+      --fs-body-small: 0.9375rem;
+    }
+    /* text boxes stay at 16px: iPhones zoom the whole page into any field smaller than that */
+    input,
+    #reminder-name,
+    #reminder-time {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 400px) {
+    /* small phone */
+    :root {
+      --fs-h1: 1.625rem;
+      --fs-h2: 1.375rem;
+      --fs-h3: 1.1875rem;
+      --fs-body-large: 1.0625rem;
+      --fs-body-reg: 0.9375rem;
+      --fs-body-small: 0.875rem;
+    }
+  }
+
+  /* ---------- LAPTOP ---------- */
+  @media (max-width: 1340px) {
+    .form-deco {
+      top: 40px;
+      right: 40px;
+      width: 180px;
+      height: 180px;
+    }
+  }
+  @media (max-width: 1240px) {
+    .form-deco {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    /* corner pictures would cover the counters / buttons, so they leave the corner
+       and sit centred under the content (order: 99 = shown last in the grid) */
+    .deco,
+    .deco.low {
+      position: static;
+      order: 99;
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    /* Reminder Saved: the white panel takes the full width, picture goes underneath */
+    .page-grid > .wrapper,
+    .feature {
+      grid-column: 1 / -1;
+    }
+    .feature {
+      width: 200px;
+      height: 200px;
+    }
+    /* Home "How it works": smaller step titles so they fit the narrower boxes */
+    .small-box h3 {
+      font-size: var(--fs-body-large);
+    }
+  }
+
+  /* ---------- TABLET & PHONE ---------- */
+  @media (max-width: 1024px) {
+    /* one column: the sidebar becomes a header bar on top of the page */
+    body {
+      grid-template-columns: 1fr;
+      /* header only as tall as its content; the page takes any spare height
+         (without this, short pages stretch the header to fill the screen) */
+      grid-template-rows: auto 1fr;
+    }
+
+    /* ----- HEADER BAR -----
+       A slim yellow bar: [hamburger] on the left, [account icon] on the right.
+       Each button drops its own panel down under the bar:
+         hamburger    -> .sidebar-panel (nav links + picture), header gets .menu-open
+         account icon -> .user (login / register),             header gets .user-open
+       index.js adds/removes those classes. */
+    .sidebar {
+      position: sticky; /* bar stays at the top while the page scrolls */
+      top: 0;
+      z-index: 100;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between; /* hamburger left, account icon right */
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      background-color: var(--clr-yellow-400);
+    }
+    /* the title and tagline are left out of the bar */
+    .sidebar-heading {
+      display: none;
+    }
+
+    /* hamburger: three white bars, no background */
+    .menu-toggle {
+      display: block;
+      position: relative;
+      flex: none;
+      inline-size: 44px; /* comfortable size for a finger */
+      block-size: 44px;
+      border: none;
+      border-radius: 12px;
+      background: none;
+      cursor: pointer;
+    }
+    /* the three bars, stacked 7.5px apart */
+    .menu-toggle-bar {
+      position: absolute;
+      left: 11px;
+      inline-size: 22px;
+      block-size: 3px;
+      border-radius: 2px;
+      background-color: white;
+      transition:
+        transform 0.3s ease,
+        opacity 0.2s ease;
+    }
+    .menu-toggle-bar:nth-child(1) {
+      top: 13px;
+    }
+    .menu-toggle-bar:nth-child(2) {
+      top: 20.5px;
+    }
+    .menu-toggle-bar:nth-child(3) {
+      top: 28px;
+    }
+    /* open: top and bottom bars meet in the middle and turn into an X, middle bar fades out */
+    .menu-open .menu-toggle-bar:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+    .menu-open .menu-toggle-bar:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    .menu-open .menu-toggle-bar:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* account button: the user icon, drawn white */
+    .user-toggle {
+      display: block;
+      flex: none;
+      inline-size: 44px;
+      block-size: 44px;
+      padding: 2px;
+      border: none;
+      border-radius: 50%;
+      background: none;
+      color: white; /* the icon's outline uses this colour (stroke="currentColor") */
+      cursor: pointer;
+    }
+    .user-toggle svg {
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+    }
+
+    .menu-toggle:focus-visible,
+    .user-toggle:focus-visible {
+      outline: 3px solid var(--clr-heading);
+      outline-offset: 2px;
+    }
+
+    /* both drop-down panels: hang just under the yellow bar */
+    .sidebar-panel,
+    .user {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-block-size: calc(100dvh - 100%); /* never taller than the screen below the bar */
+      overflow-y: auto; /* the register form can be long */
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1.5rem 1.5rem 2rem;
+      background-color: white;
+      box-shadow: var(--box-shadow-diffused);
+      /* closed: clipped away from the bottom up, nudged up a little and hidden from
+         keyboard / screen readers (visibility switches off after the animation ends) */
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(-1rem);
+      visibility: hidden;
+      transition:
+        clip-path 0.35s ease,
+        transform 0.35s ease,
+        visibility 0s linear 0.35s;
+    }
+    /* open: revealed from top to bottom (-40px leaves room for the shadow) */
+    .menu-open .sidebar-panel,
+    .user-open .user {
+      clip-path: inset(0 0 -40px 0);
+      transform: translateY(0);
+      visibility: visible;
+      transition:
+        clip-path 0.35s ease,
+        transform 0.35s ease,
+        visibility 0s;
+    }
+
+    /* account panel: avatar and name, Login | Register, and the opened form */
+    .user {
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* menu panel: nav links in a column, like the laptop sidebar */
+    .sidebar-navigation [role="list"] {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .sidebar-navigation a {
+      padding: 0.8rem 1rem;
+    }
+    .side-deco {
+      inline-size: 160px;
+      margin-top: 0;
+    }
+
+    /* page links jump to their section; keep its top clear of the sticky bar */
+    .page {
+      scroll-margin-top: 5rem;
+    }
+
+    /* pages grow with their content instead of filling the screen */
+    .base_pages_setting {
+      min-height: auto;
+      padding-inline: 1.5rem;
+      padding-block: 2rem;
+    }
+  }
+
+  /* ---------- PHONE ---------- */
+  @media (max-width: 600px) {
+    .base_pages_setting {
+      padding-inline: 1rem;
+      padding-block: 1.5rem;
+      gap: 1.25rem;
+    }
+    /* every page grid becomes a single column */
+    .page-grid,
+    .grid-3x4 {
+      grid-template-columns: 1fr;
+    }
+    .page-grid > *,
+    .grid-3x4 > * {
+      grid-column: 1 / -1;
+    }
+    .main-info {
+      padding-inline: 0;
+    }
+    .base_pages_setting > img.picture {
+      width: 220px;
+    }
+
+    /* white panels: less padding */
+    .wrapper,
+    .form_wrapper,
+    .history_card {
+      padding-inline: 1.25rem;
+      padding-block: 1.5rem;
+    }
+
+    /* buttons wrap onto a new line instead of running off screen */
+    .interactions {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .btn-main,
+    .btn-side {
+      padding-inline: 1.5rem;
+    }
+
+    /* Schedule counters */
+    .labels {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-block: 1rem 0;
+    }
+    .labels-item {
+      padding-inline: 1rem;
+      margin-block: 0;
+    }
+
+    /* cards: time + name on top, badges and buttons in a row underneath */
+    .card {
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem 1rem;
+      padding-inline: 1.25rem;
+      padding-block: 1rem;
+    }
+    .card .due {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .card .item {
+      margin-block: 0;
+      padding-inline: 1rem;
+    }
+    .card-info {
+      padding-inline: 1.25rem;
+    }
+
+    /* Add Reminder form */
+    .time-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #reminder-time {
+      width: 100%;
+      max-width: 200px;
+    }
+    #repeat-text {
+      padding-inline: 0;
+    }
+
+    /* History: the table scrolls sideways inside its panel instead of squashing */
+    .history_card {
+      overflow-x: auto;
+    }
+    .history_table {
+      min-width: 460px;
+    }
+    .history_table th,
+    .history_table td {
+      white-space: nowrap; /* "Not Recorded" stays on one line */
+      padding-inline-end: 1rem;
+    }
+    .history_table th:first-child {
+      width: auto;
+    }
+
+    /* Help cards: picture sits above the heading instead of on the right */
+    .help-card {
+      padding-inline-end: 1.25rem;
+    }
+    .card-deco,
+    .card-deco.big {
+      position: static;
+      align-self: center;
+      margin-top: 0;
+      width: 110px;
+      height: 110px;
+    }
+  }
+
+  /* people who turn off animations get the menu without the slide and the icon morph */
+  @media (max-width: 1024px) and (prefers-reduced-motion: reduce) {
+    .menu-toggle-bar,
+    .sidebar-panel,
+    .menu-open .sidebar-panel,
+    .user,
+    .user-open .user {
+      transition: none;
+    }
   }
 }
 
