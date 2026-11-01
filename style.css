@@ -442,6 +442,81 @@
       animation: none;
     }
   }
+
+  /* >>>>>>>>>>>>>>>>>>>> ILLUSTRATIONS <<<<<<<<<<<<<<<<<<<< */
+  /* Every picture sits on a soft coloured circle.
+     Kept in the components layer so it wins over the layout layer
+     (e.g. ".base_pages_setting > :last-child" would push .feature to the bottom). */
+  .base_pages_setting,
+  .form_wrapper {
+    position: relative; /* lets .deco and .form-deco be placed inside these boxes */
+  }
+  .deco,
+  .feature,
+  .form-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .deco img,
+  .feature img,
+  .form-deco img {
+    width: 86%;
+    height: 86%;
+    object-fit: contain; /* never stretch the drawing */
+  }
+  /* small picture in the top-right corner of a page */
+  .deco {
+    position: absolute;
+    top: 24px;
+    right: 56px;
+    width: 130px;
+    height: 130px;
+  }
+  /* History: a bigger one in the empty space below the table */
+  .deco.low {
+    top: auto;
+    bottom: 64px;
+    right: 72px;
+    width: 240px;
+    height: 240px;
+  }
+  /* Reminder saved: a big picture in the empty third column */
+  .feature {
+    grid-column: 3;
+    align-self: center;
+    justify-self: center;
+    width: 280px;
+    height: 280px;
+  }
+  /* Add reminder: a picture inside the white form panel, on the right */
+  .form-deco {
+    position: absolute;
+    top: 48px;
+    right: 64px;
+    width: 260px;
+    height: 260px;
+  }
+  /* circle colours, reusing the palette from :root */
+  .tint-yellow {
+    background-color: var(--clr-yellow-200);
+  }
+  .tint-orange {
+    background-color: var(--clr-orange-100);
+  }
+  .tint-blue {
+    background-color: var(--clr-blue-200);
+  }
+  .tint-green {
+    background-color: var(--clr-green-200);
+  }
+  /* family picture at the bottom of the sidebar */
+  .side-deco {
+    margin-top: auto; /* pushes it to the bottom of the sidebar */
+    align-self: center;
+    width: 200px;
+  }
 }
 
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.    NAVIGATION SETUP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
