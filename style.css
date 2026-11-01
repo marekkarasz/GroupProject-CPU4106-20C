@@ -1,5 +1,5 @@
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.    LAYER ORDER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-@layer reset, root, base, layout, components, navigation, home, schedule, reminders, historyPage;
+@layer reset, root, base, layout, components, navigation, home, schedule, reminders, historyPage, helpPage;
 @layer reset {
   *,
   *::before,
@@ -908,6 +908,45 @@
   .history_table td {
     padding-block: 1rem;
     color: var(--clr-body-reg);
+  }
+}
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.    HELP PAGES <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+@layer helpPage {
+  /* white .wrapper panel, but full width and with room on the right for the picture */
+  .help-card {
+    grid-column: 1 / -1;
+    position: relative; /* lets .card-deco sit inside the card */
+    padding-inline-end: 200px; /* keeps text clear of the picture */
+    gap: 0.75rem;
+  }
+  .help-steps,
+  .help-list {
+    margin: 0;
+    padding-inline-start: 1.5rem;
+  }
+  /* picture on a tinted circle, vertically centred on the right of the card
+     (uses the .tint-* colours from the ILLUSTRATIONS block) */
+  .card-deco {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    width: 120px;
+    height: 120px;
+    margin-top: -60px; /* half the height, to centre it */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .card-deco.big {
+    width: 170px;
+    height: 170px;
+    margin-top: -85px;
+  }
+  .card-deco img {
+    width: 86%;
+    height: 86%;
+    object-fit: contain;
   }
 }
 

@@ -415,16 +415,97 @@
       <!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< HELP PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
       <section id="help" class="page">
         <div class="base_pages_setting page-grid">
-          <!-- decorative picture (top-right corner) -->
-          <div class="deco tint-yellow">
-            <img
-              src="assets/streamline-milano--400x400-PNG/Online-Consultation-3--Streamline-Milano.png"
-              alt=""
-            />
-          </div>
           <div class="main-heading">
             <h1>Help</h1>
+            <p>
+              Simple guidance for using MediReminder and understanding its
+              limits.
+            </p>
           </div>
+
+          <!-- Demonstration content only: three help cards, each with a decorative picture on the right -->
+          <article class="wrapper help-card">
+            <div class="card-deco tint-yellow">
+              <img
+                src="assets/streamline-milano--400x400-PNG/Online-Consultation-3--Streamline-Milano.png"
+                alt=""
+              />
+            </div>
+            <h2>How do I use my reminders?</h2>
+            <ol class="help-steps">
+              <li>Open Reminders and add a name and daily time.</li>
+              <li>Open Schedule to find Upcoming, Due and Taken occurrences.</li>
+              <li>Choose Mark as taken to record an occurrence.</li>
+              <li>Open History to review the recorded entry.</li>
+            </ol>
+          </article>
+
+          <article class="wrapper help-card">
+            <div class="card-deco tint-blue">
+              <img
+                src="assets/streamline-milano--400x400-PNG/Getting-Enough-Sleep-1--Streamline-Milano.png"
+                alt=""
+              />
+            </div>
+            <h2>Why might a reminder not appear?</h2>
+            <p>
+              Keep the page open and the device active. Browser support varies.
+            </p>
+            <a class="btn-side" href="#help-alert">Read alert guidance</a>
+          </article>
+
+          <article class="wrapper help-card">
+            <div class="card-deco tint-green">
+              <img
+                src="assets/streamline-milano--400x400-PNG/Dianogsis--Streamline-Milano.png"
+                alt=""
+              />
+            </div>
+            <h2>Where are my records stored?</h2>
+            <p>
+              Records stay in this browser. Clearing browser data can remove
+              them.
+            </p>
+            <p>For medicine questions, follow your existing care instructions.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- <<<<<<<<<<<<<<<<<<<<<<< HELP: ALERT GUIDANCE PAGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+      <!-- Opened from "Read alert guidance"; data-nav keeps "Help" highlighted in the sidebar -->
+      <section id="help-alert" class="page" data-nav="help">
+        <div class="base_pages_setting page-grid">
+          <div class="main-heading">
+            <h1>Help</h1>
+            <p>
+              Simple guidance for using MediReminder and understanding its
+              limits.
+            </p>
+          </div>
+
+          <article class="wrapper help-card">
+            <div class="card-deco big tint-blue">
+              <img
+                src="assets/streamline-milano--400x400-PNG/Half-Human-Half-Robo--Streamline-Milano.png"
+                alt=""
+              />
+            </div>
+            <h2>Alert and browser guidance</h2>
+            <ul class="help-list">
+              <li>The prototype shows preset reminder states.</li>
+              <li>
+                A working application needs permission for browser
+                notifications.
+              </li>
+              <li>Closed pages and sleeping devices cannot guarantee reminders.</li>
+              <li>
+                In-page reminders should remain available if permission is
+                denied.
+              </li>
+              <li>This screen does not request real notification permission.</li>
+            </ul>
+            <a class="btn-side" href="#help">Back to Help</a>
+          </article>
         </div>
       </section>
     </main>
